@@ -123,3 +123,29 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
   #message { margin: 20px 0 12px; }
   #action { width: 100%; }
 }
+
+/* The foil and the uncovered print share one surface on the ticket stock. */
+#game article {
+  background-color: #faf5e9;
+  background-image: radial-gradient(#61523d13 .65px, transparent .85px);
+  background-size: 4px 5px;
+  border: 1px solid #aaa08e;
+  box-shadow: 0 3px 8px #42332022;
+}
+#game .panel {
+  overflow: hidden;
+  border: 1px dashed #978d7d;
+  border-radius: 7px;
+  box-shadow: none;
+  background: repeating-linear-gradient(32deg, transparent 0 5px, #876d4c09 5px 6px);
+}
+#result {
+  align-content: center;
+  gap: 12px;
+  min-height: 146px;
+  padding: 22px 16px;
+}
+#result strong { font-size: .82em; color: #70442e; }
+#result span { max-width: 100%; line-height: 1.55; }
+#foil { cursor: grab; user-select: none; }
+#foil:active { cursor: grabbing; }

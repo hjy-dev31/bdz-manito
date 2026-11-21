@@ -38,17 +38,23 @@ function newTicket(number, mission, target){
   revealed=false;
   pointer=null;
   action.hidden=false;
-  result.textContent='내 마니또 · '+target+'\n\n'+mission;
+  const recipient=document.createElement('strong');
+  recipient.textContent='내 마니또 · '+target;
+  const instruction=document.createElement('span');
+  instruction.textContent=mission;
+  result.replaceChildren(recipient,instruction);
   result.setAttribute('aria-hidden','true');
   document.querySelector('#number').textContent='NO. '+number;
   coat.globalCompositeOperation='source-over';
-  coat.fillStyle='#bdb9b6';
-  coat.fillRect(0,0,300,82);
-  for(let y=0;y<82;y+=4){
-    for(let x=(y%8);x<300;x+=8){
-      coat.fillStyle='#dfdcd9';
-      coat.fillRect(x,y,2,2);
-    }
+  foil.width=Math.max(1,Math.round(foil.clientWidth));
+  foil.height=Math.max(1,Math.round(foil.clientHeight));
+  const metal=coat.createLinearGradient(0,0,foil.width,foil.height*.6);
+  ['#90959b','#e2e5e6','#a1a5aa','#d2d5d7','#969ba0'].forEach((color,i)=>metal.addColorStop(i/4,color));
+  coat.fillStyle=metal;
+  coat.fillRect(0,0,foil.width,foil.height);
+  for(let i=0;i<foil.width*foil.height/10;i++){
+    coat.fillStyle=i%2?'rgba(255,255,255,.30)':'rgba(38,40,44,.14)';
+    coat.fillRect(Math.random()*foil.width,Math.random()*foil.height,1+Math.random()*3,1);
   }
   drawFoilWatermark();
   coat.globalCompositeOperation='destination-out';
@@ -58,7 +64,17 @@ function newTicket(number, mission, target){
 function reveal(){
   revealed=true;
   pointer=null;
-  coat.clearRect(0,0,300,82);
+  coat.clearRect(0,0,foil.width,foil.height);
+  // Fine scraps around the perimeter leave the exposed print readable.
+  coat.globalCompositeOperation='source-over';
+  for(let i=0;i<foil.width;i++){
+    const edge=i%4;
+    const inset=Math.random()**2*5;
+    const x=edge===0?inset:edge===1?foil.width-inset:Math.random()*foil.width;
+    const y=edge===2?inset:edge===3?foil.height-inset:Math.random()*foil.height;
+    coat.fillStyle=i%3?'#b2b3b280':'#73767a66';
+    coat.fillRect(x,y,1+Math.random()*3,1);
+  }
   result.removeAttribute('aria-hidden');
   message.textContent='미션을 확인했어요!\n마니또를 위한 선물을 준비해주세요\n(금액대: 2~3만원)';
   result.tabIndex=-1;
@@ -67,16 +83,21 @@ function reveal(){
 }
 function scratch(e){
   const rect=foil.getBoundingClientRect();
-  const x=(e.clientX-rect.left)*300/rect.width;
-  const y=(e.clientY-rect.top)*82/rect.height;
-  coat.lineWidth=30;
+  const x=(e.clientX-rect.left)*foil.width/rect.width;
+  const y=(e.clientY-rect.top)*foil.height/rect.height;
+  coat.lineWidth=28;
   coat.lineCap='round';
   coat.beginPath();
   coat.moveTo(previous?.x??x,previous?.y??y);
   coat.lineTo(x+0.01,y);
   coat.stroke();
+  for(let i=0;i<12;i++){
+    const angle=Math.random()*Math.PI*2;
+    const radius=13+Math.random()*5;
+    coat.fillRect(x+radius*Math.cos(angle),y+radius*Math.sin(angle),2,1);
+  }
   previous={x,y};
-  const data=coat.getImageData(0,0,300,82).data;
+  const data=coat.getImageData(0,0,foil.width,foil.height).data;
   let clear=0;
   for(let i=3;i<data.length;i+=16) if(data[i]<64) clear++;
   if(clear>data.length/16*0.55) reveal();
