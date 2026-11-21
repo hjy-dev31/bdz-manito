@@ -19,16 +19,18 @@
 <div class="ticket-stub" aria-hidden="true"><span>ADMIT ONE</span><i></i></div>
 </article></main>
 <main id="game" hidden>
-<article>
-<div class="serial"><span>FS BULLDOZER</span><span id="number"></span></div>
+<article class="admission-ticket">
+<div class="serial">FS BULLDOZER</div>
+<div class="ticket-body mission-body">
 <div class="crest" role="img" aria-label="FS BULLDOZER 엠블럼"></div>
 <h1>나의 마니또 미션</h1>
-<p>은박 아래에 나만의 미션이 있어요.</p>
-<div class="panel"><div id="result" aria-hidden="true"></div><canvas id="foil" width="300" height="82" aria-label="손가락이나 마우스로 긁는 은박 영역"></canvas></div>
-<div class="stub"><span>MANITO SCRATCH</span><i></i></div>
-</article>
 <p id="message" role="status"></p>
+<div class="panel"><div id="result" aria-hidden="true"></div><canvas id="foil" width="300" height="82" aria-label="손가락이나 마우스로 긁는 은박 영역"></canvas></div>
 <button id="action"></button>
+<div id="gift" hidden>마니또를 위한 선물을 준비해주세요<br><small>(금액대: 2~3만원)</small></div>
+</div>
+<div class="ticket-stub"><span id="number"></span><i aria-hidden="true"></i></div>
+</article>
 </main>
 <script src="game.js"></script>
 <script src="login.js"></script>

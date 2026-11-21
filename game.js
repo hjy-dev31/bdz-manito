@@ -38,11 +38,14 @@ function newTicket(number, mission, target){
   revealed=false;
   pointer=null;
   action.hidden=false;
+  document.querySelector('#gift').hidden=true;
   const recipient=document.createElement('strong');
-  recipient.textContent='내 마니또 · '+target;
+  const label=document.createElement('small');
+  label.textContent='내 마니또';
+  recipient.textContent=target;
   const instruction=document.createElement('span');
   instruction.textContent=mission;
-  result.replaceChildren(recipient,instruction);
+  result.replaceChildren(label,recipient,instruction);
   result.setAttribute('aria-hidden','true');
   document.querySelector('#number').textContent='NO. '+number;
   coat.globalCompositeOperation='source-over';
@@ -76,7 +79,8 @@ function reveal(){
     coat.fillRect(x,y,1+Math.random()*3,1);
   }
   result.removeAttribute('aria-hidden');
-  message.textContent='미션을 확인했어요!\n마니또를 위한 선물을 준비해주세요\n(금액대: 2~3만원)';
+  message.textContent='미션을 확인했어요!';
+  document.querySelector('#gift').hidden=false;
   result.tabIndex=-1;
   result.focus();
   action.hidden=true;

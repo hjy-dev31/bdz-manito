@@ -33,8 +33,8 @@ button:active{transform:translate(2px,2px);box-shadow:1px 1px #201b19}
 :focus-visible{outline:3px solid #a93110;outline-offset:3px}
 
 /* Portrait admission ticket */
-#entrance { width: min(90%, 380px); margin-block-start: clamp(18px, 4vh, 42px); }
-#entrance .admission-ticket {
+#entrance, #game { width: min(90%, 380px); margin-block-start: clamp(18px, 4vh, 42px); }
+.admission-ticket {
   border: 0;
   background: #ff632c;
   box-shadow: inset 0 4px #ffb487, inset 0 -4px #bf411c;
@@ -108,7 +108,7 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
   }
   #entrance, #game { width: 100%; margin: 0 auto; padding: 0; }
   #entrance { max-width: 380px; }
-  #game { max-width: 460px; }
+  #game { max-width: 380px; }
   .ticket-body .crest { width: clamp(72px, 14svh, 112px); }
   #login { padding: 4px 6% 18px; }
   #login label { margin: 10px 0; }
@@ -125,19 +125,12 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
 }
 
 /* The foil and the uncovered print share one surface on the ticket stock. */
-#game article {
-  background-color: #faf5e9;
-  background-image: radial-gradient(#61523d13 .65px, transparent .85px);
-  background-size: 4px 5px;
-  border: 1px solid #aaa08e;
-  box-shadow: 0 3px 8px #42332022;
-}
 #game .panel {
   overflow: hidden;
   border: 1px dashed #978d7d;
-  border-radius: 7px;
+  border-radius: 0;
   box-shadow: none;
-  background: repeating-linear-gradient(32deg, transparent 0 5px, #876d4c09 5px 6px);
+  background: repeating-linear-gradient(32deg, transparent 0 5px, #876d4c09 5px 6px), #fff7e8;
 }
 #result {
   align-content: center;
@@ -145,7 +138,23 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
   min-height: 146px;
   padding: 22px 16px;
 }
-#result strong { font-size: .82em; color: #70442e; }
+#result small { color: #784120; font-size: 12px; }
+#result strong { font-size: 23px; line-height: 1.3; }
+#result span { border-top: 1px dashed #b79679; padding-top: 12px; }
 #result span { max-width: 100%; line-height: 1.55; }
 #foil { cursor: grab; user-select: none; }
 #foil:active { cursor: grabbing; }
+
+.mission-body { padding: 4px clamp(12px, 4vw, 22px) 20px; }
+#game .crest { width: 94px; margin: 0 auto -3px; }
+#game h1 { margin: 0; font-size: clamp(20px, 5.6vw, 24px); letter-spacing: -.04em; text-shadow: none; }
+#game #message { margin: 8px 0 16px; color: #ded0c2; font-size: 14px; line-height: 1.5; }
+#game .panel { margin: 0; color: #24211f; }
+#game #result { min-height: 166px; gap: 6px; font-size: 17px; line-height: 1.55; word-break: keep-all; }
+#action { margin-top: 14px; min-height: 44px; width: 100%; border: 1px solid #9b8878; box-shadow: none; color: #fff3e3; background: transparent; font-size: 14px; }
+#gift { margin-top: 16px; font: 700 14px/1.65 Galmuri11,sans-serif; color: #ffdfc3; word-break: keep-all; }
+#gift small { color: #d2c3b5; font-size: 13px; }
+.mission-body:has(#gift:not([hidden])) { display: flex; flex-direction: column; }
+.mission-body:has(#gift:not([hidden])) .panel { order: 1; margin-top: 16px; }
+.mission-body:has(#gift:not([hidden])) #message { order: 2; margin: 16px 0 2px; }
+.mission-body:has(#gift:not([hidden])) #gift { order: 3; margin-top: 0; }
