@@ -154,7 +154,3 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
 #action { margin-top: 14px; min-height: 44px; width: 100%; border: 1px solid #9b8878; box-shadow: none; color: #fff3e3; background: transparent; font-size: 14px; }
 #gift { margin-top: 16px; font: 700 14px/1.65 Galmuri11,sans-serif; color: #ffdfc3; word-break: keep-all; }
 #gift small { color: #d2c3b5; font-size: 13px; }
-.mission-body:has(#gift:not([hidden])) { display: flex; flex-direction: column; }
-.mission-body:has(#gift:not([hidden])) .panel { order: 1; margin-top: 16px; }
-.mission-body:has(#gift:not([hidden])) #message { order: 2; margin: 16px 0 2px; }
-.mission-body:has(#gift:not([hidden])) #gift { order: 3; margin-top: 0; }

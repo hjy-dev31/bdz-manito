@@ -82,7 +82,7 @@ function reveal(){
   message.textContent='미션을 확인했어요!';
   document.querySelector('#gift').hidden=false;
   result.tabIndex=-1;
-  result.focus();
+  result.focus({preventScroll:true});
   action.hidden=true;
 }
 function scratch(e){
