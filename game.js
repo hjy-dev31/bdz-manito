@@ -4,6 +4,34 @@ const result = document.querySelector('#result');
 const message = document.querySelector('#message');
 const action = document.querySelector('#action');
 let revealed=false, pointer=null, previous=null;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const panel = foil.parentElement;
+let lastFlakeTime = -Infinity;
+
+function scatterPixels(x, y, celebration) {
+  if (reducedMotion.matches) return;
+  const colors = celebration ? ['#ff632c', '#e5ad43', '#c9451e'] : ['#696d73', '#e1e4e6', '#999da2'];
+  const count = celebration ? 24 : 3;
+  for (let i = 0; i < count; i++) {
+    const pixel = document.createElement('i');
+    pixel.className = 'ticket-pixel';
+    pixel.setAttribute('aria-hidden', 'true');
+    const angle = (Math.random() + 1) * Math.PI;
+    const distance = celebration ? 45 + Math.random() * 75 : 10 + Math.random() * 15;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance;
+    pixel.style.left = x + 'px';
+    pixel.style.top = y + 'px';
+    pixel.style.background = colors[i % colors.length];
+    panel.append(pixel);
+    const flight = pixel.animate([
+      {transform:'translate(0,0)', opacity:1},
+      {transform:`translate(${dx}px,${dy}px) rotate(60deg)`, opacity:1, offset:0.55},
+      {transform:`translate(${dx * 1.4}px,${dy + distance * 0.7}px) rotate(120deg)`, opacity:0}
+    ], {duration:celebration ? 650 : 270, easing:'ease-out'});
+    flight.onfinish = flight.oncancel = () => pixel.remove();
+  }
+}
 function drawFoilWatermark(){
   const pixels = [
     '11110 11110 11111',
@@ -38,6 +66,7 @@ function newTicket(number, mission, target){
   revealed=false;
   pointer=null;
   action.hidden=false;
+  panel.classList.remove('scratched');
   document.querySelector('#gift').hidden=true;
   const recipient=document.createElement('strong');
   const label=document.createElement('small');
@@ -84,6 +113,8 @@ function reveal(){
   result.tabIndex=-1;
   result.focus({preventScroll:true});
   action.hidden=true;
+  panel.classList.add('scratched');
+  scatterPixels(panel.clientWidth / 2, panel.clientHeight * 0.65, true);
 }
 function scratch(e){
   const rect=foil.getBoundingClientRect();
@@ -101,6 +132,10 @@ function scratch(e){
     coat.fillRect(x+radius*Math.cos(angle),y+radius*Math.sin(angle),2,1);
   }
   previous={x,y};
+  if (e.timeStamp - lastFlakeTime > 45) {
+    scatterPixels(e.clientX - rect.left, e.clientY - rect.top, false);
+    lastFlakeTime = e.timeStamp;
+  }
   const data=coat.getImageData(0,0,foil.width,foil.height).data;
   let clear=0;
   for(let i=3;i<data.length;i+=16) if(data[i]<64) clear++;

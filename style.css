@@ -154,3 +154,21 @@ h1, button, #game p, #game #result { font-family: Galmuri11, 'Malgun Gothic', sa
 #action { margin-top: 14px; min-height: 44px; width: 100%; border: 1px solid #9b8878; box-shadow: none; color: #fff3e3; background: transparent; font-size: 14px; }
 #gift { margin-top: 16px; font: 700 14px/1.65 Galmuri11,sans-serif; color: #ffdfc3; word-break: keep-all; }
 #gift small { color: #d2c3b5; font-size: 13px; }
+
+.ticket-pixel { position: absolute; width: 4px; height: 3px; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  main:not([hidden]) { animation: dispense-ticket 460ms cubic-bezier(.2,.75,.25,1) both; }
+  .ticket-stub i { animation: print-bars 420ms steps(12,end) 120ms backwards; }
+  .scratched #result strong { animation: stamp-name 240ms ease-out; }
+  #gift:not([hidden]) { animation: ink-in 320ms ease-out both; }
+}
+@keyframes dispense-ticket {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(-8px); }
+}
+@keyframes print-bars { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes stamp-name {
+  from { transform: scale(1.12) rotate(-3deg); opacity: .55; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes ink-in { from { opacity: 0; } to { opacity: 1; } }
