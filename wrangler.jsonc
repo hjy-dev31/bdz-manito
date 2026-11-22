@@ -1,0 +1,9 @@
+{
+  "name": "bdz-manito-login",
+  "main": "worker.mjs",
+  "compatibility_date": "2025-01-01",
+  "workers_dev": true,
+  "vars": {
+    "SITE_ORIGIN": "https://hjy-dev31.github.io"
+  }
+}

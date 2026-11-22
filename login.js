@@ -1,5 +1,4 @@
-// GitHub Pages 배포 시 Worker의 HTTPS 주소를 입력하세요.
-const workerUrl = '';
+const workerUrl = 'https://bdz-manito-login.bdz-manito.workers.dev';
 const form = document.querySelector('#login');
 form.onsubmit = async event => {
   event.preventDefault();
@@ -9,8 +8,7 @@ form.onsubmit = async event => {
   notice.textContent = '입장권을 확인하고 있어요.';
   try {
     const local = ['localhost','127.0.0.1'].includes(location.hostname);
-    if (!local && !workerUrl) throw new Error('입장 서버 주소를 먼저 설정해 주세요.');
-    const response = await fetch(workerUrl || '/login', {
+    const response = await fetch(local ? '/login' : workerUrl, {
       method:'POST',
       body:new URLSearchParams(new FormData(form))
     });
